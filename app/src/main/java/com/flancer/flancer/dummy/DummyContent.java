@@ -38,14 +38,14 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Job " + position, makeDetails(position));
+        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Job details: ").append(position);
+        builder.append("Details about Item: ").append(position);
         for (int i = 0; i < position; i++) {
-            builder.append("\nInfo about the freelance job here.");
+            builder.append("\nMore details information here.");
         }
         return builder.toString();
     }
