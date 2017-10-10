@@ -13,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-    public void login(){
+    public void login(View v){
         EditText editPassField = (EditText)findViewById(R.id.password);
         String passField = editPassField.getText().toString();
         EditText editLoginField = (EditText)findViewById(R.id.email);
@@ -22,12 +22,13 @@ public class LoginActivity extends AppCompatActivity {
         if(passField.equals("test") && loginField.equals("test")) {
             Intent intent = new Intent(this, JobListActivity.class);
             startActivity(intent);
+            finish();
         }
     }
-    public void creatCompany(){
+    public void creatCompany(View v){
 
     }
-    public void creatUser(){
+    public void creatUser(View v){
 
     }
 }
