@@ -25,10 +25,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
-    public void creatCompany(View v){
-
-    }
-    public void creatUser(View v){
-
+    public void register(View v) {
+        
     }
 }
