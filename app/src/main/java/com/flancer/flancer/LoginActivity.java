@@ -24,8 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         String passField = editPassField.getText().toString();
         EditText editLoginField = (EditText) findViewById(R.id.email);
         String loginField = editLoginField.getText().toString();
-
         User user = SQLite.select().from(User.class).where(User_Table.email.is(loginField)).querySingle();
+
         if (user != null) {
             if (passField.equals(user.getPassword())) {
                 Intent intent = new Intent(this, JobListActivity.class);
