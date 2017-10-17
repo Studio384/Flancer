@@ -1,6 +1,7 @@
 package com.flancer.flancer;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,11 +26,18 @@ public class LoginActivity extends AppCompatActivity {
         String loginField = editLoginField.getText().toString();
 
         User user = SQLite.select().from(User.class).where(User_Table.email.is(loginField)).querySingle();
-
-        if (passField.equals(user.getPassword())) {
-            Intent intent = new Intent(this, JobListActivity.class);
-            startActivity(intent);
-            finish();
+        if (user != null) {
+            if (passField.equals(user.getPassword())) {
+                Intent intent = new Intent(this, JobListActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                editPassField.setBackgroundColor(Color.parseColor("#ff0033"));
+                editPassField.setTextColor(Color.parseColor("#FFFFFFFF"));
+            }
+        }else{
+            editLoginField.setBackgroundColor(Color.parseColor("#ff0033"));
+            editLoginField.setTextColor(Color.parseColor("#FFFFFFFF"));
         }
     }
 
