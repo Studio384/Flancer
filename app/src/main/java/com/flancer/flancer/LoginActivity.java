@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.flancer.flancer.beans.User;
-import com.flancer.flancer.global.GlobalUser;
+import com.flancer.flancer.beans.User_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,7 +24,9 @@ public class LoginActivity extends AppCompatActivity {
         EditText editLoginField = (EditText) findViewById(R.id.email);
         String loginField = editLoginField.getText().toString();
 
-        if (passField.equals("test") && loginField.equals("test")) {
+        User user = SQLite.select().from(User.class).where(User_Table.email.is(loginField)).querySingle();
+
+        if (passField.equals(user.getPassword())) {
             Intent intent = new Intent(this, JobListActivity.class);
             startActivity(intent);
             finish();
