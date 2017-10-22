@@ -17,7 +17,7 @@ import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTr
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity {
+public class registerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
