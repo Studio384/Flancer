@@ -49,15 +49,13 @@ public class registerActivity extends AppCompatActivity {
         for (EditText editText : editTextList) {
             if (TextUtils.isEmpty(editText.getText())) {
                 editText.setBackgroundColor(Color.parseColor("#ff0033"));
-                editText.setTextColor(Color.parseColor("#FFFFFFFF"));
-                editTextFieldIsEmpty = true;
+                editText.setBackgroundColor(Color.parseColor("#ffffff"));
             }
         }
         return editTextFieldIsEmpty;
     }
 
     private void registerUser(EditText firstName, EditText lastName, EditText email, EditText password) {
-
         User user = new User();
         user.setFirstName(firstName.getText().toString());
         user.setLastName(lastName.getText().toString());
@@ -65,5 +63,11 @@ public class registerActivity extends AppCompatActivity {
         user.setPassword(password.getText().toString());
         user.async();
         user.save();
+    }
+
+    public void login(View v) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
