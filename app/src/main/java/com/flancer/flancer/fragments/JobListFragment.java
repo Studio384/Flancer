@@ -21,6 +21,10 @@ import android.widget.ListView;
 
 import com.flancer.flancer.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,6 +108,59 @@ public class JobListFragment extends Fragment {
     public class FetchJobTask extends AsyncTask<Void, Void, String[]> {
         private final String LOG_TAG = FetchJobTask.class.getSimpleName();
 
+        private String getTitle(String title) {
+            return title;
+        }
+
+        private String getDescription(String description) {
+            return description;
+        }
+
+        private String getAddressStreet(String street, String number) {
+            return street + " " + number;
+        }
+
+        private String getAddressCity(String zip, String city) {
+            return zip + " " + city;
+        }
+
+        private String getCountry(String country) {
+            return country;
+        }
+
+        private int getCompanyId(int company_id) {
+            return company_id;
+        }
+
+        /**
+         * Parse the data from the full json string that we will receive
+         */
+        private String[] getJobDataFromJson(String jobJsonStr) throws JSONException {
+            JSONObject jobJson = new JSONObject(jobJsonStr);
+            JSONArray jobArray = jobJson.getJSONArray("");
+
+            String[] resultStrs = new String[jobArray.length()];
+            for (int i = 0; i < jobArray.length(); i++) {
+                int company_id;
+                String title;
+                String city;
+
+                JSONObject jobObject = jobArray.getJSONObject(i);
+
+                company_id = jobObject.getInt("company_id");
+                title = jobObject.getString("title");
+                city = jobObject.getString("city");
+
+                resultStrs[i] = company_id + " " + title + " in " + city;
+            }
+
+            for (String s : resultStrs) {
+                Log.v(LOG_TAG, "Job entry: " + s);
+            }
+
+            return resultStrs;
+        }
+
         @Override
         protected String[] doInBackground(Void... params) {
             HttpURLConnection urlConnection = null;
@@ -111,7 +168,7 @@ public class JobListFragment extends Fragment {
             String jobJsonString = null;
 
             try {
-                final String FLANCER_BASE_URL = "hhttp://flancer.studio384.be/job/";
+                final String FLANCER_BASE_URL = "http://flancer.studio384.be/job/";
 
                 Uri builtUri = Uri.parse(FLANCER_BASE_URL).buildUpon().build();
 
@@ -160,7 +217,25 @@ public class JobListFragment extends Fragment {
                 }
             }
 
+            try {
+                return getJobDataFromJson(jobJsonString);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            }
+
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mJobAdapter.clear();
+
+                for (String jobStr : result) {
+                    mJobAdapter.add(jobStr);
+                }
+            }
         }
     }
 }
