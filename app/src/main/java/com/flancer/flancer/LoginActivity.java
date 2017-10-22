@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (user != null) {
             if (passField.equals(user.getPassword())) {
-                Intent intent = new Intent(this, JobListActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
