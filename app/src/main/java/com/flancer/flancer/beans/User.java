@@ -2,22 +2,40 @@ package com.flancer.flancer.beans;
 
 import android.app.Application;
 
+import com.flancer.flancer.database.FlancerDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by 11500613 on 17/10/2017.
  */
+@Table(database = FlancerDatabase.class)
+public class User extends BaseModel {
 
-public class User extends Application {
-    private String name;
-    private String firstName;
-    private String Email;
+    @Column
+    @PrimaryKey
     private int id;
 
-    public String getName() {
-        return name;
+    @Column
+    private String lastName;
+
+    @Column
+    private String firstName;
+
+    @Column
+    private String email;
+
+    @Column
+    private String password;
+
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -29,11 +47,11 @@ public class User extends Application {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public int getId() {
@@ -42,5 +60,13 @@ public class User extends Application {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

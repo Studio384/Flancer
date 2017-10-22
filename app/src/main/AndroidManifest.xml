@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".global.GlobalUser"
+        android:name=".global.myApp"
         >
         <activity
             android:name=".JobListActivity"
