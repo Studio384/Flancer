@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new JobListFragment())
-                    .commit();
+                .add(R.id.container, new JobListFragment())
+                .commit();
         }
     }
 }

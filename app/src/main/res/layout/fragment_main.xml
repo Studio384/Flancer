@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.JobListFragment">
 
-
     <ListView
         android:id="@+id/listview_job"
         android:layout_width="match_parent"

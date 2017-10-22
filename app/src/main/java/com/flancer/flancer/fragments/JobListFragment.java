@@ -4,7 +4,7 @@ package com.flancer.flancer.fragments;
  * Created by Yannick on 22/10/2017.
  */
 
-
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.flancer.flancer.DetailActivity;
 import com.flancer.flancer.R;
 
 import org.json.JSONArray;
@@ -32,9 +34,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class JobListFragment extends Fragment {
 
     ArrayAdapter<String> mJobAdapter;
@@ -52,7 +51,7 @@ public class JobListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Create the menu
-        inflater.inflate(R.menu.jobfragment, menu);
+        inflater.inflate(R.menu.job, menu);
     }
 
     @Override
@@ -86,6 +85,16 @@ public class JobListFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_job);
         listView.setAdapter(mJobAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String job = mJobAdapter.getItem(position);
+                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, job);
+
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
