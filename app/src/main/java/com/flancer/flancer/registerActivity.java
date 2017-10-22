@@ -9,10 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.flancer.flancer.beans.User;
-import com.flancer.flancer.database.FlancerDatabase;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction;
 
 import java.util.ArrayList;
 import java.util.List;

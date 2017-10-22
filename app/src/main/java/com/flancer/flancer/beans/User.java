@@ -1,7 +1,5 @@
 package com.flancer.flancer.beans;
 
-import android.app.Application;
-
 import com.flancer.flancer.database.FlancerDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;

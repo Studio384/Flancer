@@ -31,9 +31,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -76,26 +73,14 @@ public class JobListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
-        String[] jobsArray = {
-                "Studio 384 &middot; web developer",
-                "Flancer &middot; Android developer",
-                "Flancer &middot; iOS developer",
-                "Flancer &middot; Windows developer",
-                "PXL &middot; security teacher"
-        };
-        List<String> jobList = new ArrayList<String>(Arrays.asList(jobsArray));
+        FetchJobTask jobTask = new FetchJobTask();
+        jobTask.execute();
 
-
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
-        // use it to populate the ListView it's attached to.
         mJobAdapter =
                 new ArrayAdapter<String>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_job, // The name of the layout ID.
-                        R.id.list_item_job_textview, // The ID of the textview to populate.
-                        jobList);
+                        getActivity(),
+                        R.layout.list_item_job,
+                        R.id.list_item_job_textview);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -157,10 +142,6 @@ public class JobListFragment extends Fragment {
                 city = jobObject.getString("city");
 
                 resultStrs[i] = "Job " + id + " for " + company_id + " " + title + " in " + city;
-            }
-
-            for (String s : resultStrs) {
-                Log.v(LOG_TAG, "Job entry: " + s);
             }
 
             return resultStrs;
