@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registerActivity" />
+        <activity android:name=".RegisterActivity" />
 
         <uses-permission android:name="android.permission.INTERNET" />
 
