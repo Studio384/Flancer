@@ -16,6 +16,7 @@ public class Job {
     private String city;
     private String country;
 
+    /*
     public Job __construct( int id, String title, int company_id, float minimum_bid, String description, String street, String number, String city, String zip, String country ) {
         this.setId( id );
         this.setTitle( title );
@@ -28,6 +29,7 @@ public class Job {
         this.setZip( zip );
         this.setCountry( country );
     }
+    */
 
     // Setters
     public void setId( int id ) {
