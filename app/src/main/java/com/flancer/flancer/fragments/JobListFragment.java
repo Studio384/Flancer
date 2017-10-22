@@ -5,11 +5,15 @@ package com.flancer.flancer.fragments;
  */
 
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,6 +39,33 @@ public class JobListFragment extends Fragment {
     ArrayAdapter<String> mJobAdapter;
 
     public JobListFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Create the menu
+        inflater.inflate(R.menu.jobfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            FetchJobTask jobTask = new FetchJobTask();
+            jobTask.execute();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -70,19 +101,21 @@ public class JobListFragment extends Fragment {
         return rootView;
     }
 
-    public class FetchJobTask extends AsyncTask<Void, Void, Void> {
+    public class FetchJobTask extends AsyncTask<Void, Void, String[]> {
         private final String LOG_TAG = FetchJobTask.class.getSimpleName();
 
-        // Get a reference to the ListView, and attach this adapter to it.
-
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String[] doInBackground(Void... params) {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             String jobJsonString = null;
 
             try {
-                URL url = new URL("hhttp://flancer.studio384.be/job/");
+                final String FLANCER_BASE_URL = "hhttp://flancer.studio384.be/job/";
+
+                Uri builtUri = Uri.parse(FLANCER_BASE_URL).buildUpon().build();
+
+                URL url = new URL(builtUri.toString());
 
                 // Create the request to Flancer, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -111,7 +144,7 @@ public class JobListFragment extends Fragment {
 
                 jobJsonString = buffer.toString();
             } catch (IOException e) {
-                Log.e("PlaceholderFragment", "Error ", e);
+                Log.e(LOG_TAG, "Error ", e);
                 // Fail means we've got nothing to do
                 return null;
             } finally {
@@ -122,7 +155,7 @@ public class JobListFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e("PlaceholderFragment", "Error closing stream", e);
+                        Log.e(LOG_TAG, "Error closing stream", e);
                     }
                 }
             }
