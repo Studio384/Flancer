@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, registerActivity.class);
         startActivity(intent);
         finish();
     }
