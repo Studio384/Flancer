@@ -108,6 +108,10 @@ public class JobListFragment extends Fragment {
     public class FetchJobTask extends AsyncTask<Void, Void, String[]> {
         private final String LOG_TAG = FetchJobTask.class.getSimpleName();
 
+        private int getId(int id) {
+            return id;
+        }
+
         private String getTitle(String title) {
             return title;
         }
@@ -136,22 +140,23 @@ public class JobListFragment extends Fragment {
          * Parse the data from the full json string that we will receive
          */
         private String[] getJobDataFromJson(String jobJsonStr) throws JSONException {
-            JSONObject jobJson = new JSONObject(jobJsonStr);
-            JSONArray jobArray = jobJson.getJSONArray("");
+            JSONArray jobArray = new JSONArray(jobJsonStr);
 
             String[] resultStrs = new String[jobArray.length()];
             for (int i = 0; i < jobArray.length(); i++) {
+                int id;
                 int company_id;
                 String title;
                 String city;
 
                 JSONObject jobObject = jobArray.getJSONObject(i);
 
+                id = jobObject.getInt("id");
                 company_id = jobObject.getInt("company_id");
                 title = jobObject.getString("title");
                 city = jobObject.getString("city");
 
-                resultStrs[i] = company_id + " " + title + " in " + city;
+                resultStrs[i] = "Job " + id + " for " + company_id + " " + title + " in " + city;
             }
 
             for (String s : resultStrs) {
