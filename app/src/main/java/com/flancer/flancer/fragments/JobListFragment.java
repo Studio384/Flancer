@@ -163,24 +163,25 @@ public class JobListFragment extends Fragment {
                 title = jobObject.getString("title");
                 city = jobObject.getString("city");
 
-                resultStrs[i] = "Job " + id + " for " + company_id + " " + title + " in " + city;
+                String company = getCompanyDataFromJson(company_id);
+
+                resultStrs[i] = title + " at " + company + " in " + city;
             }
 
             return resultStrs;
         }
 
-        @Override
-        protected String[] doInBackground(Void... params) {
+        private String getCompanyDataFromJson(int company_id) throws JSONException {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            String jobJsonString = null;
+            String companyJsonString = null;
 
             try {
-                final String FLANCER_BASE_URL = "http://flancer.studio384.be/job/";
+                final String FLANCER_BASE_URL = "http://flancer.studio384.be/company/" + company_id;
 
-                Uri builtUri = Uri.parse(FLANCER_BASE_URL).buildUpon().build();
+                Uri uri = Uri.parse(FLANCER_BASE_URL).buildUpon().build();
 
-                URL url = new URL(builtUri.toString());
+                URL url = new URL(uri.toString());
 
                 // Create the request to Flancer, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -207,7 +208,7 @@ public class JobListFragment extends Fragment {
                     return null;
                 }
 
-                jobJsonString = buffer.toString();
+                companyJsonString = buffer.toString();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // Fail means we've got nothing to do
@@ -215,6 +216,81 @@ public class JobListFragment extends Fragment {
             } finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            String companyJson = "[" + companyJsonString + "]";
+            JSONArray companyArray = new JSONArray(companyJson);
+
+            String resultStr = "";
+            for (int i = 0; i < companyArray.length(); i++) {
+                JSONObject company = companyArray.getJSONObject(i);
+
+                int id;
+                String name;
+
+                id = company.getInt("id");
+                name = company.getString("name");
+
+                resultStr = id + " " + name;
+            }
+
+            return resultStr;
+        }
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            HttpURLConnection jobUrlConnection = null;
+            BufferedReader reader = null;
+            String jobJsonString = null;
+
+            try {
+                final String FLANCER_JOB_BASE_URL = "http://flancer.studio384.be/job/";
+
+                Uri jobUri = Uri.parse(FLANCER_JOB_BASE_URL).buildUpon().build();
+
+                URL jobUrl = new URL(jobUri.toString());
+
+                // Create the request to Flancer, and open the connection
+                jobUrlConnection = (HttpURLConnection) jobUrl.openConnection();
+                jobUrlConnection.setRequestMethod("GET");
+                jobUrlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = jobUrlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+
+                if (inputStream == null) { // Empty means we've got nothing to do
+                    return null;
+                }
+
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Simplify debugging with new lines
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) { // Stream was empty, don't parse
+                    return null;
+                }
+
+                jobJsonString = buffer.toString();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // Fail means we've got nothing to do
+                return null;
+            } finally {
+                if (jobUrlConnection != null) {
+                    jobUrlConnection.disconnect();
                 }
                 if (reader != null) {
                     try {
