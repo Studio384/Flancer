@@ -9,4 +9,39 @@
         android:defaultValue="@string/pref_name_default"
         android:inputType="text"
         android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_street_label"
+        android:key="@string/pref_street_key"
+        android:defaultValue="@string/pref_street_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_number_label"
+        android:key="@string/pref_number_key"
+        android:defaultValue="@string/pref_number_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_city_label"
+        android:key="@string/pref_city_key"
+        android:defaultValue="@string/pref_city_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_zip_label"
+        android:key="@string/pref_zip_key"
+        android:defaultValue="@string/pref_zip_default"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <EditTextPreference
+        android:title="@string/pref_country_label"
+        android:key="@string/pref_country_key"
+        android:defaultValue="@string/pref_country_default"
+        android:inputType="text"
+        android:singleLine="true" />
 </PreferenceScreen>

@@ -6,4 +6,24 @@
     <string name="pref_name_label">Name</string>
     <string name="pref_name_key" translatable="false">name</string>
     <string name="pref_name_default" translatable="false">Jhon Doe</string>
+
+    <string name="pref_street_label">Street</string>
+    <string name="pref_street_key" translatable="false">street</string>
+    <string name="pref_street_default" translatable="false">Steenbergstraat</string>
+
+    <string name="pref_number_label">Number</string>
+    <string name="pref_number_key" translatable="false">number</string>
+    <string name="pref_number_default" translatable="false">20</string>
+
+    <string name="pref_city_label">City</string>
+    <string name="pref_city_key" translatable="false">city</string>
+    <string name="pref_city_default" translatable="false">Bree</string>
+
+    <string name="pref_zip_label">ZIP</string>
+    <string name="pref_zip_key" translatable="false">zip</string>
+    <string name="pref_zip_default" translatable="false">3960</string>
+
+    <string name="pref_country_label">Country</string>
+    <string name="pref_country_key" translatable="false">country</string>
+    <string name="pref_country_default" translatable="false">Belgium</string>
 </resources>
