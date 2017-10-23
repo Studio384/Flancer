@@ -22,7 +22,6 @@ import android.widget.ListView;
 
 import com.flancer.flancer.DetailActivity;
 import com.flancer.flancer.R;
-import com.flancer.flancer.SettingsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,13 +33,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class JobListFragment extends Fragment {
+public class DetailFragment extends Fragment {
 
     ArrayAdapter<String> mJobAdapter;
 
-    public JobListFragment() {
+    public DetailFragment() {
     }
 
     @Override
@@ -60,13 +58,8 @@ public class JobListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_refresh) {
-            updatedJobs();
-            return true;
-        }
-
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(getActivity(), SettingsActivity.class));
             return true;
         }
 
@@ -76,12 +69,15 @@ public class JobListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        FetchJobTask jobTask = new FetchJobTask();
+        jobTask.execute();
+
         mJobAdapter =
                 new ArrayAdapter<String>(
                         getActivity(),
                         R.layout.list_item_job,
-                        R.id.list_item_job_textview,
-                        new ArrayList<String>());
+                        R.id.list_item_job_textview);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -99,17 +95,6 @@ public class JobListFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    private void updatedJobs() {
-        FetchJobTask jobTask = new FetchJobTask();
-        jobTask.execute();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        updatedJobs();
     }
 
     public class FetchJobTask extends AsyncTask<Void, Void, String[]> {
