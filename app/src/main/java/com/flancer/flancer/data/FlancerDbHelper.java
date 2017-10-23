@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.flancer.flancer.data.FlancerContract.JobEntry;
 import com.flancer.flancer.data.FlancerContract.CompanyEntry;
+import com.flancer.flancer.data.FlancerContract.FreelancerEntry;
 
 /**
  * Created by Yannick on 23/10/2017.
@@ -47,13 +48,26 @@ public class FlancerDbHelper extends SQLiteOpenHelper {
                 CompanyEntry.COLUMN_NUMBER + " TEXT NOT NULL, " +
                 CompanyEntry.COLUMN_CITY + " TEXT NOT NULL, " +
                 CompanyEntry.COLUMN_ZIP + " TEXT NOT NULL, " +
-                JobEntry.COLUMN_COUNTRY + " TEXT NOT NULL, " +
+                CompanyEntry.COLUMN_COUNTRY + " TEXT NOT NULL, " +
 
                 // If there are duplicates of this type, we've got to replace them
                 " UNIQUE (" + CompanyEntry.COLUMN_ID + ") ON CONFLICT REPLACE);";
 
+        final String SQL_CREATE_FREELANCERS_TABLE = "CREATE TABLE " + FreelancerEntry.TABLE_NAME + " (" +
+                FreelancerEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                FreelancerEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                FreelancerEntry.COLUMN_STREET + " TEXT NOT NULL, " +
+                FreelancerEntry.COLUMN_NUMBER + " TEXT NOT NULL, " +
+                FreelancerEntry.COLUMN_CITY + " TEXT NOT NULL, " +
+                FreelancerEntry.COLUMN_ZIP + " TEXT NOT NULL, " +
+                FreelancerEntry.COLUMN_COUNTRY + " TEXT NOT NULL, " +
+
+                // If there are duplicates of this type, we've got to replace them
+                " UNIQUE (" + FreelancerEntry.COLUMN_ID + ") ON CONFLICT REPLACE);";
+
         sqLiteDatabase.execSQL(SQL_CREATE_JOBS_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_COMPANIES_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_FREELANCERS_TABLE);
     }
 
     @Override
@@ -61,6 +75,7 @@ public class FlancerDbHelper extends SQLiteOpenHelper {
         // We can safely remove any data as this is just a cache from the online database
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + JobEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CompanyEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FreelancerEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }

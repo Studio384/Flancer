@@ -50,6 +50,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <provider
+            android:authorities="com.flancer.flancer.app"
+            android:name=".data.FlancerProvider" />
     </application>
 
 </manifest>
