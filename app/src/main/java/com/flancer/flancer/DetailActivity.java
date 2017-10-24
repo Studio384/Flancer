@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.flancer.flancer.fragments.DetailFragment;
+
 public class DetailActivity extends ActionBarActivity {
 
     @Override
@@ -21,29 +23,6 @@ public class DetailActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, new DetailFragment())
                 .commit();
-        }
-    }
-
-    public static class DetailFragment extends Fragment {
-
-        public DetailFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
-            // The detail Activity called via intent.  Inspect the intent for forecast data.
-            Intent intent = getActivity().getIntent();
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                String jobStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.description))
-                        .setText(jobStr);
-            }
-
-            return rootView;
         }
     }
 }

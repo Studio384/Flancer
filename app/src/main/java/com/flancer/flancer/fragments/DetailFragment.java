@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.flancer.flancer.DetailActivity;
 import com.flancer.flancer.FetchJobTask;
@@ -57,29 +58,15 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FetchJobTask jobTask = new FetchJobTask(getActivity(), mJobAdapter);
-        jobTask.execute();
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mJobAdapter =
-                new ArrayAdapter<String>(
-                        getActivity(),
-                        R.layout.list_item_job,
-                        R.id.list_item_job_textview);
-
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_job);
-        listView.setAdapter(mJobAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String job = mJobAdapter.getItem(position);
-                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, job);
-
-                startActivity(intent);
-            }
-        });
+        // The detail Activity called via intent.  Inspect the intent for forecast data.
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+            String jobStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+            ((TextView) rootView.findViewById(R.id.description))
+                    .setText(jobStr);
+        }
 
         return rootView;
     }
