@@ -1,4 +1,4 @@
-package com.flancer.flancer;
+package com.flancer.flancer.tasks;
 
 import android.content.Context;
 import android.net.Uri;
@@ -21,12 +21,12 @@ import java.net.URL;
  * Created by Yannick on 23/10/2017.
  */
 
-public class FetchJobTask extends AsyncTask<Void, Void, String[]> {
-    private final String LOG_TAG = FetchJobTask.class.getSimpleName();
+public class FetchJobsTask extends AsyncTask<Void, Void, String[]> {
+    private final String LOG_TAG = FetchJobsTask.class.getSimpleName();
     ArrayAdapter<String> mJobAdapter;
     private final Context mContext;
 
-    public FetchJobTask(Context context, ArrayAdapter<String> jobAdapter) {
+    public FetchJobsTask(Context context, ArrayAdapter<String> jobAdapter) {
         mContext = context;
         mJobAdapter = jobAdapter;
     }

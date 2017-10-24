@@ -13,13 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.flancer.flancer.DetailActivity;
-import com.flancer.flancer.FetchJobTask;
 import com.flancer.flancer.R;
 
 public class DetailFragment extends Fragment {
@@ -60,7 +56,6 @@ public class DetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             String jobStr = intent.getStringExtra(Intent.EXTRA_TEXT);

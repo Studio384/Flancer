@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.flancer.flancer.DetailActivity;
-import com.flancer.flancer.FetchJobTask;
+import com.flancer.flancer.tasks.FetchJobsTask;
 import com.flancer.flancer.R;
 import com.flancer.flancer.SettingsActivity;
 
@@ -90,7 +90,7 @@ public class JobListFragment extends Fragment {
     }
 
     private void updatedJobs() {
-        FetchJobTask jobTask = new FetchJobTask(getActivity(), mJobAdapter);
+        FetchJobsTask jobTask = new FetchJobsTask(getActivity(), mJobAdapter);
         jobTask.execute();
     }
 
