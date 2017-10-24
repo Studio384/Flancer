@@ -140,20 +140,5 @@
             android:textColor="#FFFFFFFF"
             android:visibility="visible" />
 
-        <Button
-            android:id="@+id/Login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:background="@color/colorPrimary"
-            android:elevation="0dp"
-            android:onClick="login"
-            android:text="Login"
-            android:textColor="#FFFFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/Footer"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

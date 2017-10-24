@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.flancer.flancer.beans.User;
 import com.flancer.flancer.beans.User_Table;
+import com.flancer.flancer.global.myApp;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (user != null) {
             if (passField.equals(user.getPassword())) {
+                ((myApp) this.getApplication()).user = user;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -35,15 +37,14 @@ public class LoginActivity extends AppCompatActivity {
                 editPassField.setBackgroundColor(Color.parseColor("#ff0033"));
                 editPassField.setTextColor(Color.parseColor("#FFFFFFFF"));
             }
-        }else{
+        } else {
             editLoginField.setBackgroundColor(Color.parseColor("#ff0033"));
             editLoginField.setTextColor(Color.parseColor("#FFFFFFFF"));
         }
     }
 
     public void register(View v) {
-        Intent intent = new Intent(this, registerActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-        finish();
     }
 }

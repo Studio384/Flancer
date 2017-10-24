@@ -13,7 +13,7 @@ import com.flancer.flancer.beans.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class registerActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,7 @@ public class registerActivity extends AppCompatActivity {
         editTextList.add(password);
 
         if (!colorEmptyFieldRed(editTextList)) {
-            registerUser(firstName,lastName,email,password);
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            registerUser(firstName, lastName, email, password);
             finish();
         }
     }
@@ -59,11 +57,5 @@ public class registerActivity extends AppCompatActivity {
         user.setPassword(password.getText().toString());
         user.async();
         user.save();
-    }
-
-    public void login(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
