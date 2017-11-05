@@ -7,20 +7,26 @@ package com.flancer.flancer.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.flancer.flancer.R;
+import com.flancer.flancer.SettingsActivity;
 
 public class DetailFragment extends Fragment {
 
-    ArrayAdapter<String> mJobAdapter;
+    private static final String LOG_TAG = DetailFragment.class.getSimpleName();
+    private static final String FLANCER_SHARE_STRING = " with Flancer";
+    private String mJobStr;
+    private ShareActionProvider mShareActionProvider;
 
     public DetailFragment() {
     }
@@ -33,18 +39,18 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Create the menu
-        inflater.inflate(R.menu.job, menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
             return true;
+        }
+
+        if (id == R.id.menu_item_share) {
+            startShareIntent();
+            return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
@@ -58,11 +64,27 @@ public class DetailFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            String jobStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+            mJobStr = intent.getStringExtra(Intent.EXTRA_TEXT);
             ((TextView) rootView.findViewById(R.id.description))
-                    .setText(jobStr);
+                    .setText(mJobStr);
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.detail, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem menuItem = menu.findItem(R.id.menu_item_share);
+    }
+    
+    public void startShareIntent() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, mJobStr + FLANCER_SHARE_STRING);
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 }
