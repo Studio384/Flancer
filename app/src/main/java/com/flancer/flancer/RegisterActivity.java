@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.flancer.flancer.beans.User;
+import com.flancer.flancer.beans.User_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!colorEmptyFieldRed(editTextList)) {
             registerUser(firstName, lastName, email, password);
-            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "Pleas fil in the form", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -43,7 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         for (EditText editText : editTextList) {
             if (TextUtils.isEmpty(editText.getText())) {
                 editText.setBackgroundColor(Color.parseColor("#ff0033"));
-                editText.setBackgroundColor(Color.parseColor("#ffffff"));
+                editText.setTextColor(Color.parseColor("#ffffff"));
+                editTextFieldIsEmpty = true;
             }
         }
         return editTextFieldIsEmpty;
@@ -55,7 +60,24 @@ public class RegisterActivity extends AppCompatActivity {
         user.setLastName(lastName.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
-        user.async();
-        user.save();
+        if (userDoesNotExist(user)) {
+            user.async();
+            user.save();
+            Toast.makeText(getApplicationContext(), "User has being created", Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "User already exist", Toast.LENGTH_SHORT).show();
+            email.setBackgroundColor(Color.parseColor("#ff0033"));
+        }
+    }
+
+    private boolean userDoesNotExist(User user) {
+        User user1 = SQLite.select().from(User.class).where(User_Table.email.is(user.getEmail())).querySingle();
+
+        if (user1 != null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
