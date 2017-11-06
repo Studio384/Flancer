@@ -18,15 +18,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Yannick on 23/10/2017.
+ * Created by Yannick on 6/11/2017.
  */
 
-public class FetchJobsTask extends AsyncTask<Void, Void, String[][]> {
+public class FetchJobTask extends AsyncTask<Void, Void, String[][]> {
     private final String LOG_TAG = FetchJobsTask.class.getSimpleName();
-    ArrayAdapter<String> mJobAdapter;
+    ArrayAdapter<String[]> mJobAdapter;
     private final Context mContext;
 
-    public FetchJobsTask(Context context, ArrayAdapter<String> jobAdapter) {
+    public FetchJobTask(Context context, ArrayAdapter<String[]> jobAdapter) {
         mContext = context;
         mJobAdapter = jobAdapter;
     }
@@ -58,80 +58,6 @@ public class FetchJobsTask extends AsyncTask<Void, Void, String[][]> {
         }
 
         return resultStrs;
-    }
-
-    private String getCompanyDataFromJson(int company_id) throws JSONException {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String companyJsonString = null;
-
-        try {
-            final String FLANCER_BASE_URL = "http://flancer.studio384.be/company/" + company_id;
-
-            Uri uri = Uri.parse(FLANCER_BASE_URL).buildUpon().build();
-
-            URL url = new URL(uri.toString());
-
-            // Create the request to Flancer, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-
-            if (inputStream == null) { // Empty means we've got nothing to do
-                return null;
-            }
-
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Simplify debugging with new lines
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) { // Stream was empty, don't parse
-                return null;
-            }
-
-            companyJsonString = buffer.toString();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-            // Fail means we've got nothing to do
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
-                }
-            }
-        }
-
-        String companyJson = "[" + companyJsonString + "]";
-        JSONArray companyArray = new JSONArray(companyJson);
-
-        String resultStr = "";
-        for (int i = 0; i < companyArray.length(); i++) {
-            JSONObject company = companyArray.getJSONObject(i);
-
-            int id;
-            String name;
-
-            id = company.getInt("id");
-            name = company.getString("name");
-
-            resultStr = id + " " + name;
-        }
-
-        return resultStr;
     }
 
     @Override
@@ -206,7 +132,7 @@ public class FetchJobsTask extends AsyncTask<Void, Void, String[][]> {
             mJobAdapter.clear();
 
             for (String[] jobStr : result) {
-                mJobAdapter.add(jobStr[0] + " at " + jobStr[1] + " in " + jobStr[6]);
+                mJobAdapter.add(jobStr);
             }
         }
     }

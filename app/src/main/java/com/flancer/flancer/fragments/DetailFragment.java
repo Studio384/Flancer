@@ -7,8 +7,6 @@ package com.flancer.flancer.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +63,7 @@ public class DetailFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             mJobStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+
             ((TextView) rootView.findViewById(R.id.description))
                     .setText(mJobStr);
         }
@@ -76,9 +75,6 @@ public class DetailFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.detail, menu);
-
-        // Locate MenuItem with ShareActionProvider
-        MenuItem menuItem = menu.findItem(R.id.menu_item_share);
     }
     
     public void startShareIntent() {

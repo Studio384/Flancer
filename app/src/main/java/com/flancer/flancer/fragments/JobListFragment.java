@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class JobListFragment extends Fragment {
 
-    ArrayAdapter<String> mJobAdapter;
+    ArrayAdapter<String> mJobsAdapter;
 
     public JobListFragment() {
     }
@@ -64,7 +64,7 @@ public class JobListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mJobAdapter =
+        mJobsAdapter =
                 new ArrayAdapter<String>(
                         getActivity(),
                         R.layout.list_item_job,
@@ -74,13 +74,13 @@ public class JobListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_job);
-        listView.setAdapter(mJobAdapter);
+        listView.setAdapter(mJobsAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String job = mJobAdapter.getItem(position);
-                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, job);
+                String job = mJobsAdapter.getItem(position);
+                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, position);
 
                 startActivity(intent);
             }
@@ -90,8 +90,8 @@ public class JobListFragment extends Fragment {
     }
 
     private void updatedJobs() {
-        FetchJobsTask jobTask = new FetchJobsTask(getActivity(), mJobAdapter);
-        jobTask.execute();
+        FetchJobsTask jobsTask = new FetchJobsTask(getActivity(), mJobsAdapter);
+        jobsTask.execute();
     }
 
     @Override
