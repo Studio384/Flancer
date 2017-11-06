@@ -23,13 +23,6 @@ import java.net.URL;
 
 public class FetchJobTask extends AsyncTask<Void, Void, String[][]> {
     private final String LOG_TAG = FetchJobsTask.class.getSimpleName();
-    ArrayAdapter<String[]> mJobAdapter;
-    private final Context mContext;
-
-    public FetchJobTask(Context context, ArrayAdapter<String[]> jobAdapter) {
-        mContext = context;
-        mJobAdapter = jobAdapter;
-    }
 
     /**
      * Parse the data from the full json string that we will receive
@@ -128,12 +121,5 @@ public class FetchJobTask extends AsyncTask<Void, Void, String[][]> {
 
     @Override
     protected void onPostExecute(String[][] result) {
-        if (result != null) {
-            mJobAdapter.clear();
-
-            for (String[] jobStr : result) {
-                mJobAdapter.add(jobStr);
-            }
-        }
     }
 }

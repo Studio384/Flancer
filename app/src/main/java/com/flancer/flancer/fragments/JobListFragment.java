@@ -80,7 +80,8 @@ public class JobListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String job = mJobsAdapter.getItem(position);
-                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, position);
+                String jobId = position + "";
+                Intent intent = new Intent (getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, jobId);
 
                 startActivity(intent);
             }
