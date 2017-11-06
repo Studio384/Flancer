@@ -40,18 +40,16 @@ public class FetchJobsTask extends AsyncTask<Void, Void, String[]> {
         String[] resultStrs = new String[jobArray.length()];
         for (int i = 0; i < jobArray.length(); i++) {
             int id;
-            int company_id;
+            String company;
             String title;
             String city;
 
             JSONObject jobObject = jobArray.getJSONObject(i);
 
             id = jobObject.getInt("id");
-            company_id = jobObject.getInt("company_id");
+            company = jobObject.getString("company");
             title = jobObject.getString("title");
             city = jobObject.getString("city");
-
-            String company = getCompanyDataFromJson(company_id);
 
             resultStrs[i] = title + " at " + company + " in " + city;
         }
