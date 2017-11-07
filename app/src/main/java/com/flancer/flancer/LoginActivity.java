@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             } else {
                 editPassField.setBackgroundColor(Color.parseColor("#ff0033"));
                 editPassField.setTextColor(Color.parseColor("#FFFFFFFF"));
