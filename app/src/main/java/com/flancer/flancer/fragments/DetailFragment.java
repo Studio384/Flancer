@@ -38,6 +38,8 @@ public class DetailFragment extends Fragment {
     private int iJobId;
     private String[][] resultStrs = new String[0][];
 
+    String street, city, country, company, title, description, phone, email, begin_date, end_date;
+
     public DetailFragment() {
     }
 
@@ -86,22 +88,31 @@ public class DetailFragment extends Fragment {
             mJobId = intent.getStringExtra(Intent.EXTRA_TEXT) + "";
             iJobId = Integer.parseInt(mJobId);
 
-            ((TextView) rootView.findViewById(R.id.title)).setText(resultStrs[iJobId][0]);
-            ((TextView) rootView.findViewById(R.id.company)).setText(resultStrs[iJobId][1]);
-            ((TextView) rootView.findViewById(R.id.description)).setText(resultStrs[iJobId][6]);
-            ((TextView) rootView.findViewById(R.id.phone)).setText(resultStrs[iJobId][2]);
-            ((TextView) rootView.findViewById(R.id.email)).setText(resultStrs[iJobId][3]);
-            ((TextView) rootView.findViewById(R.id.date)).setText("From " + resultStrs[iJobId][4] +
-                    System.lineSeparator() + "Until " + resultStrs[iJobId][5]);
+            street = resultStrs[iJobId][7] + " " + resultStrs[iJobId][8];
+            city = resultStrs[iJobId][9] + " " + resultStrs[iJobId][10];
+            country = resultStrs[iJobId][11];
+            title = resultStrs[iJobId][0];
+            company = resultStrs[iJobId][1];
+            description = resultStrs[iJobId][6];
+            phone = resultStrs[iJobId][2];
+            email = resultStrs[iJobId][3];
+            begin_date = resultStrs[iJobId][4];
+            end_date = resultStrs[iJobId][5];
+
+            ((TextView) rootView.findViewById(R.id.title)).setText(title);
+            ((TextView) rootView.findViewById(R.id.company)).setText(company);
+            ((TextView) rootView.findViewById(R.id.description)).setText(description);
+            ((TextView) rootView.findViewById(R.id.phone)).setText(phone);
+            ((TextView) rootView.findViewById(R.id.email)).setText(email);
+            ((TextView) rootView.findViewById(R.id.date)).setText("From " + begin_date +
+                    System.lineSeparator() + "Until " + end_date);
             ((TextView) rootView.findViewById(R.id.address)).setText(
-                    resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + System.lineSeparator() +
-                    resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + System.lineSeparator() +
-                    resultStrs[iJobId][11]);
+                    street + System.lineSeparator() +
+                    city + System.lineSeparator() +
+                    country);
 
             // Reverse lookup for address
-            String jobAddress =  resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + ", " +
-                    resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + ", " +
-                    resultStrs[iJobId][11];
+            String jobAddress =  street + ", " + city + ", " + country;
 
             double cords[] = new double[2];
 
@@ -130,18 +141,18 @@ public class DetailFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         String shareString =
-                resultStrs[iJobId][0] + System.lineSeparator() + System.lineSeparator() +
-                "Company: " + resultStrs[iJobId][1] + System.lineSeparator() + System.lineSeparator() +
-                "From: " + resultStrs[iJobId][4] + System.lineSeparator() +
-                "Until: " + resultStrs[iJobId][4] + System.lineSeparator() + System.lineSeparator() +
-                 resultStrs[iJobId][6] + System.lineSeparator() + System.lineSeparator() +
+                title + System.lineSeparator() + System.lineSeparator() +
+                "Company: " + company + System.lineSeparator() + System.lineSeparator() +
+                "From: " + begin_date + System.lineSeparator() +
+                "Until: " + end_date + System.lineSeparator() + System.lineSeparator() +
+                 description + System.lineSeparator() + System.lineSeparator() +
                 "Contact information " + System.lineSeparator() +
-                "Phone: " + System.lineSeparator() + resultStrs[iJobId][2] + System.lineSeparator() + System.lineSeparator() +
-                "Email: " + System.lineSeparator() + resultStrs[iJobId][3] + System.lineSeparator() + System.lineSeparator() +
+                "Phone: " + System.lineSeparator() + phone + System.lineSeparator() + System.lineSeparator() +
+                "Email: " + System.lineSeparator() + email + System.lineSeparator() + System.lineSeparator() +
                 "Address: " + System.lineSeparator() +
-                resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + System.lineSeparator() +
-                resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + System.lineSeparator() +
-                resultStrs[iJobId][11] + System.lineSeparator() + System.lineSeparator() +
+                street + System.lineSeparator() +
+                city + System.lineSeparator() +
+                country + System.lineSeparator() + System.lineSeparator() +
                 "Powered by Flancer";
         intent.putExtra(android.content.Intent.EXTRA_TEXT, shareString);
         startActivity(Intent.createChooser(intent, getString(R.string.share)));
