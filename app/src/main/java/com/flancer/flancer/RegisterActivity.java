@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public void register(View v) {
@@ -65,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
             user.save();
             Toast.makeText(getApplicationContext(), "User created.", Toast.LENGTH_LONG).show();
             finish();
+            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         } else {
             Toast.makeText(getApplicationContext(), "Email is already taken.", Toast.LENGTH_SHORT).show();
             email.setBackgroundColor(Color.parseColor("#ff0033"));
@@ -79,5 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 }
