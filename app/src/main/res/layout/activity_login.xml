@@ -42,10 +42,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email_placeholder"
             android:inputType="textEmailAddress"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,9 +65,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:fontFamily="Roboto"/>
+            android:fontFamily="Roboto"
+            android:hint="@string/password_placeholder"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +86,7 @@
             android:layout_weight="0.5"
             android:background="@color/colorPrimary"
             android:onClick="register"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="#FFFFFFFF"
             android:visibility="visible" />
 
@@ -98,7 +98,7 @@
             android:background="@color/colorPrimary"
             android:elevation="0dp"
             android:onClick="login"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="#FFFFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/Footer"
             app:layout_constraintHorizontal_bias="0.0"
