@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.flancer.flancer.beans.User;
 import com.flancer.flancer.beans.User_Table;
@@ -36,10 +37,12 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 editPassField.setBackgroundColor(Color.parseColor("#ff0033"));
                 editPassField.setTextColor(Color.parseColor("#FFFFFFFF"));
+                Toast.makeText(getApplicationContext(), "Incorrect password.", Toast.LENGTH_SHORT).show();
             }
         } else {
             editLoginField.setBackgroundColor(Color.parseColor("#ff0033"));
             editLoginField.setTextColor(Color.parseColor("#FFFFFFFF"));
+            Toast.makeText(getApplicationContext(), "User does not exist.", Toast.LENGTH_SHORT).show();
         }
     }
 

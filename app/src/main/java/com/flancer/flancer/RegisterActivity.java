@@ -63,10 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
         if (userDoesNotExist(user)) {
             user.async();
             user.save();
-            Toast.makeText(getApplicationContext(), "User has being created", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "User created.", Toast.LENGTH_LONG).show();
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), "User already exist", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Email is already taken.", Toast.LENGTH_SHORT).show();
             email.setBackgroundColor(Color.parseColor("#ff0033"));
         }
     }
