@@ -37,24 +37,13 @@ public class FetchJobsTask extends AsyncTask<Void, Void, String[][]> {
     private String[][] getJobDataFromJson(String jobJsonStr) throws JSONException {
         JSONArray jobArray = new JSONArray(jobJsonStr);
 
-        String[][] resultStrs = new String[jobArray.length()][9];
+        String[][] resultStrs = new String[jobArray.length()][3];
         for (int i = 0; i < jobArray.length(); i++) {
-            int id;
-            String company;
-            String title;
-            String city;
-
             JSONObject jobObject = jobArray.getJSONObject(i);
 
             resultStrs[i][0] = jobObject.getString("title");
             resultStrs[i][1] = jobObject.getString("company");
-            resultStrs[i][2] = jobObject.getString("description");
-            resultStrs[i][3] = jobObject.getString("street");
-            resultStrs[i][4] = jobObject.getString("number");
-            resultStrs[i][5] = jobObject.getString("zip");
-            resultStrs[i][6] = jobObject.getString("city");
-            resultStrs[i][7] = jobObject.getString("country");
-            resultStrs[i][8] = jobObject.getString("minimum_bid");
+            resultStrs[i][2] = jobObject.getString("city");
         }
 
         return resultStrs;
@@ -206,7 +195,7 @@ public class FetchJobsTask extends AsyncTask<Void, Void, String[][]> {
             mJobAdapter.clear();
 
             for (String[] jobStr : result) {
-                mJobAdapter.add(jobStr[0] + " at " + jobStr[1] + " in " + jobStr[6]);
+                mJobAdapter.add(jobStr[0] + " at " + jobStr[1] + " in " + jobStr[2]);
             }
         }
     }

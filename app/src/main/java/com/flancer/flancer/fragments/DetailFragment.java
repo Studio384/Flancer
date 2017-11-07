@@ -96,11 +96,15 @@ public class DetailFragment extends Fragment {
 
             ((TextView) rootView.findViewById(R.id.title)).setText(resultStrs[iJobId][0]);
             ((TextView) rootView.findViewById(R.id.company)).setText(resultStrs[iJobId][1]);
-            ((TextView) rootView.findViewById(R.id.description)).setText(resultStrs[iJobId][2]);
+            ((TextView) rootView.findViewById(R.id.description)).setText(resultStrs[iJobId][6]);
+            ((TextView) rootView.findViewById(R.id.phone)).setText(resultStrs[iJobId][2]);
+            ((TextView) rootView.findViewById(R.id.email)).setText(resultStrs[iJobId][3]);
+            ((TextView) rootView.findViewById(R.id.date)).setText("From " + resultStrs[iJobId][4] +
+                    System.lineSeparator() + "Until " + resultStrs[iJobId][5]);
             ((TextView) rootView.findViewById(R.id.address)).setText(
-                    resultStrs[iJobId][3] + " " + resultStrs[iJobId][4] + System.lineSeparator() +
-                    resultStrs[iJobId][5] + " " + resultStrs[iJobId][6] + System.lineSeparator() +
-                    resultStrs[iJobId][7]);
+                    resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + System.lineSeparator() +
+                    resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + System.lineSeparator() +
+                    resultStrs[iJobId][11]);
         }
 
         return rootView;
