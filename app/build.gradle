@@ -22,6 +22,8 @@ android {
 def dbflow_version = "4.0.3"
 
 dependencies {
+    compile 'com.google.android.gms:play-services:11.4.2'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

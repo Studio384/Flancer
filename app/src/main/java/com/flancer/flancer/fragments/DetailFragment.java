@@ -4,7 +4,10 @@ package com.flancer.flancer.fragments;
  * Created by Yannick on 22/10/2017.
  */
 
+import android.app.Activity;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,7 +22,11 @@ import android.widget.TextView;
 import com.flancer.flancer.R;
 import com.flancer.flancer.SettingsActivity;
 import com.flancer.flancer.tasks.FetchJobTask;
+import com.flancer.flancer.tasks.FetchMapTask;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class DetailFragment extends Fragment {
@@ -73,6 +80,7 @@ public class DetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        // Bind data to the UI
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             mJobId = intent.getStringExtra(Intent.EXTRA_TEXT) + "";
@@ -89,6 +97,24 @@ public class DetailFragment extends Fragment {
                     resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + System.lineSeparator() +
                     resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + System.lineSeparator() +
                     resultStrs[iJobId][11]);
+
+            // Reverse lookup for address
+            String jobAddress =  resultStrs[iJobId][7] + " " + resultStrs[iJobId][8] + ", " +
+                    resultStrs[iJobId][9] + " " + resultStrs[iJobId][10] + ", " +
+                    resultStrs[iJobId][11];
+
+            double cords[] = new double[2];
+
+            try {
+                cords = new FetchMapTask(getActivity()).execute(jobAddress).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            ((TextView) rootView.findViewById(R.id.cords)).setText(
+                    cords[0] + " " + cords[1]);
         }
 
         return rootView;

@@ -6,90 +6,113 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity$DetailFragment">
 
-    <TextView
-        android:id="@+id/title"
-        android:text="Job title"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:textSize="26dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/company"
-        android:text="Company name"
-        android:textStyle="bold"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:textSize="23dp"
-        android:textAllCaps="true"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/date"
-        android:text="From"
-        android:paddingTop="4dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:textSize="20dp"
-        android:fontFamily="Roboto Light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/title"
+            android:text="Job title"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:textSize="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/description"
-        android:text="Job description"
-        android:paddingTop="4dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:textSize="17dp"
-        android:lineSpacingExtra="4dp"
-        android:fontFamily="Roboto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/company"
+            android:text="Company name"
+            android:textStyle="bold"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:textSize="23dp"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/contactLabel"
-        android:text="Contact"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:textSize="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/date"
+            android:text="From"
+            android:paddingTop="4dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="20dp"
+            android:fontFamily="Roboto Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/phone"
-        android:text="Phone"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:textSize="18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/description"
+            android:text="Job description"
+            android:paddingTop="4dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="17dp"
+            android:lineSpacingExtra="4dp"
+            android:fontFamily="Roboto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/email"
-        android:text="Email"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:textSize="18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/contactLabel"
+            android:text="Contact"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:textSize="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/address"
-        android:text="Address"
-        android:paddingRight="16dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:textSize="18dp"
+        <TextView
+            android:id="@+id/phone"
+            android:text="Phone"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/email"
+            android:text="Email"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/address"
+            android:text="Address"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/cords"
+            android:text="Cords"
+            android:paddingRight="16dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </LinearLayout>
