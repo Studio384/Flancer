@@ -4,10 +4,7 @@ package com.flancer.flancer.fragments;
  * Created by Yannick on 22/10/2017.
  */
 
-import android.app.Activity;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,18 +15,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flancer.flancer.R;
 import com.flancer.flancer.SettingsActivity;
+import com.flancer.flancer.listeners.OnMapAndViewReadyListener;
 import com.flancer.flancer.tasks.FetchJobTask;
 import com.flancer.flancer.tasks.FetchMapTask;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener,
+        GoogleMap.OnMarkerDragListener,
+        GoogleMap.OnInfoWindowLongClickListener,
+        GoogleMap.OnInfoWindowCloseListener,
+        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     ArrayAdapter<String[]> mJobAdapter;
 
@@ -37,6 +47,9 @@ public class DetailFragment extends Fragment {
     private String mJobId;
     private int iJobId;
     private String[][] resultStrs = new String[0][];
+    private GoogleMap mMap;
+    private LatLng LOCATION;
+    private Marker mLocation;
 
     String street, city, country, company, title, description, phone, email, begin_date, end_date;
 
@@ -71,7 +84,6 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         try {
             resultStrs = new FetchJobTask().execute().get();
         } catch (InterruptedException e) {
@@ -124,9 +136,12 @@ public class DetailFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            ((TextView) rootView.findViewById(R.id.cords)).setText(
-                    cords[0] + " " + cords[1]);
+            LOCATION = new LatLng(cords[1], cords[0]);
         }
+
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        new OnMapAndViewReadyListener(mapFragment, this);
 
         return rootView;
     }
@@ -156,5 +171,82 @@ public class DetailFragment extends Fragment {
                 "Powered by Flancer";
         intent.putExtra(android.content.Intent.EXTRA_TEXT, shareString);
         startActivity(Intent.createChooser(intent, getString(R.string.share)));
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        // Add lots of markers to the map.
+        addMarkersToMap();
+
+        // Set listeners for marker events.  See the bottom of this class for their behavior.
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnMarkerDragListener(this);
+        mMap.setOnInfoWindowCloseListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
+
+        // Override the default content description on the view, for accessibility mode.
+        // Ideally this string would be localised.
+        mMap.setContentDescription("Map with marker.");
+
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(LOCATION)
+                .build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+    }
+
+    private void addMarkersToMap() {
+        // Uses a colored icon.
+        mLocation = mMap.addMarker(new MarkerOptions()
+                .position(LOCATION)
+                .title(company)
+                .snippet(street + System.lineSeparator() + city)
+                .icon(BitmapDescriptorFactory.defaultMarker()));
+    }
+
+    private boolean checkReady() {
+        if (mMap == null) {
+            Toast.makeText(getActivity(), "Map is not ready yet", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+    }
+
+    @Override
+    public void onInfoWindowClose(Marker marker) {
+
+    }
+
+    @Override
+    public void onInfoWindowLongClick(Marker marker) {
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
     }
 }
