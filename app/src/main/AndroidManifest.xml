@@ -13,11 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDTTWnbtEQnb0Q_WGWeH7HqMEbL86enGN0" />
@@ -25,6 +23,7 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -60,9 +59,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <provider
-            android:authorities="com.flancer.flancer.app"
-            android:name=".data.FlancerProvider" />
+            android:name=".data.FlancerProvider"
+            android:authorities="com.flancer.flancer.app" />
+
     </application>
 
 </manifest>
